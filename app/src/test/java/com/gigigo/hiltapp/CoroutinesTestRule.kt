@@ -12,17 +12,16 @@ import org.junit.runner.Description
  * Test rule that changes [Dispatchers.Main] with [TestCoroutineDispatcher]
  */
 
-class CoroutinesTestRule @ExperimentalCoroutinesApi constructor(
-    val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
+@ExperimentalCoroutinesApi
+class CoroutinesTestRule constructor(
+    private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
 ) : TestWatcher() {
 
-    @ExperimentalCoroutinesApi
     override fun starting(description: Description?) {
         super.starting(description)
         Dispatchers.setMain(testDispatcher)
     }
 
-    @ExperimentalCoroutinesApi
     override fun finished(description: Description?) {
         super.finished(description)
         testDispatcher.cleanupTestCoroutines()

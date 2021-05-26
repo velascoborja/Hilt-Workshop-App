@@ -11,12 +11,12 @@ import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 
+@ExperimentalCoroutinesApi
 class PopularMoviesViewModelTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    @ExperimentalCoroutinesApi
     @get:Rule
     var coroutinesTestRule = CoroutinesTestRule()
 
