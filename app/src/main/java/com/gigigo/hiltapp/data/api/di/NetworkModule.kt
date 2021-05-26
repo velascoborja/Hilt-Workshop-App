@@ -4,6 +4,8 @@ import com.gigigo.hiltapp.BuildConfig
 import com.gigigo.hiltapp.data.api.services.MoviesService
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,15 +13,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
+@InstallIn(SingletonComponent::class)
 class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMoviesService(retrofit: Retrofit) = retrofit.create(MoviesService::class.java)
+    fun provideMoviesService(retrofit: Retrofit): MoviesService =
+        retrofit.create(MoviesService::class.java)
 
     @Provides
     @Singleton
-    fun provideRetrofit(@BaseUrl url: String, okHttpClient: OkHttpClient) =
+    fun provideRetrofit(@BaseUrl url: String, okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
